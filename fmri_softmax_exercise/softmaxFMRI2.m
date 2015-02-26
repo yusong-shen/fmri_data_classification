@@ -1,14 +1,15 @@
-%% CS294A/CS294W Softmax Exercise
-
-%  Instructions
-%  ------------
-%
+function [trainacc, testacc] = softmaxFMRI( lambda, range ,datasetnum)
+% softmax regression for fmri dataset
 %  This file contains code that helps you get started on the
 %  softmax exercise. You will need to write the softmax cost function
 %  in softmaxCost.m and the softmax prediction function in softmaxPred.m.
 %  For this exercise, you will not need to change any code in this file,
 %  or any other files other than those mentioned above.
 %  (However, you may be required to do so in later exercises)
+if (nargin<3) || isempty(datasetnum)
+    datasetnum = 4;
+end
+    
 
 addpath '../library/'
 
@@ -20,7 +21,6 @@ addpath '../library/'
 %  We also initialise some parameters used for tuning the model.
 
 % choose dataset
-datasetnum = 2;
 
 if datasetnum == 1
     % 90x130 original fmri dataset
@@ -60,9 +60,8 @@ test_labels(test_labels==0) = 2; % Remap 0 to 2
 
 numClasses = 2;     % Number of classes (MNIST images fall into 10 classes)
 
-% lambda = 1e-4; % Weight decay parameter
 % Todo : validation
-lambda = 1e-4; % Weight decay parameter
+% lambda = 1e-4; % Weight decay parameter
 
 
 %%======================================================================
@@ -78,7 +77,7 @@ lambda = 1e-4; % Weight decay parameter
 % have saved them
 
 
-inputData = training_data;
+inputData = test_data;
 
 % For debugging purposes, you may wish to reduce the size of the input data
 % in order to speed up gradient checking.
@@ -96,7 +95,7 @@ if DEBUG
     labels = labels(1:100);
 end
 
-range = 0.005;
+% range = 0.005;
 % Randomly initialise theta
 theta = range * randn(numClasses * inputSize, 1);
 
@@ -105,7 +104,7 @@ theta = range * randn(numClasses * inputSize, 1);
 %
 %  Implement softmaxCost in softmaxCost.m.
 
-[cost, grad] = softmaxCost(theta, numClasses, inputSize, lambda, inputData, training_labels);
+[cost, grad] = softmaxCost(theta, numClasses, inputSize, lambda, inputData, test_labels);
 
 % %%======================================================================
 % %% STEP 3: Gradient checking
@@ -137,7 +136,7 @@ theta = range * randn(numClasses * inputSize, 1);
 
 options.maxIter = 100;
 softmaxModel = softmaxTrain(inputSize, numClasses, lambda, ...
-                            inputData, training_labels, options);
+                            inputData, test_labels, options);
 
 % Although we only use 100 iterations here to train a classifier for the
 % MNIST data set, in practice, training for more iterations is usually
@@ -147,8 +146,8 @@ softmaxModel = softmaxTrain(inputSize, numClasses, lambda, ...
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);
 
-acc = mean(training_labels(:) == pred(:));
-fprintf('Training Accuracy: %0.3f%%\n', acc * 100);
+trainacc = mean(test_labels(:) == pred(:));
+fprintf('Training Accuracy: %0.3f%%\n', trainacc * 100);
 
 %%======================================================================
 %% STEP 5: Testing
@@ -162,13 +161,13 @@ fprintf('Training Accuracy: %0.3f%%\n', acc * 100);
 
 
 
-inputData = test_data;
+inputData = training_data;
 
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);
 
-acc = mean(test_labels(:) == pred(:));
-fprintf('Test Accuracy: %0.3f%%\n', acc * 100);
+testacc = mean(training_labels(:) == pred(:));
+fprintf('Test Accuracy: %0.3f%%\n', testacc * 100);
 
 % Accuracy is the proportion of correctly classified images
 % After 100 iterations, the results for our implementation were:
@@ -179,3 +178,6 @@ fprintf('Test Accuracy: %0.3f%%\n', acc * 100);
 % your code for errors, and make sure you are training on the
 % entire data set of 60000 28x28 training images
 % (unless you modified the loading code, this should be the case)
+
+end
+
