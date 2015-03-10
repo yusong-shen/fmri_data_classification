@@ -20,43 +20,12 @@ addpath '../library/'
 %  to be used more generally on any arbitrary input.
 %  We also initialise some parameters used for tuning the model.
 
-% choose dataset
+lambda = 1e-4; % Weight decay parameter
+range = 0.005; % initial weight magnitude
 
-if datasetnum == 1
-    % 90x130 original fmri dataset
-    fprintf('90x130 original fmri dataset\n');
-    inputSize = 90*130;
-    training_data = loadFMRIData('../data/training_fmri_dataset.mat');
-    training_labels = loadFMRIData('../data/training_fmri_labels.mat');
-    test_data = loadFMRIData('../data/test_fmri_dataset.mat');
-    test_labels = loadFMRIData('../data/test_fmri_labels.mat');
-elseif datasetnum == 2
-    % 90x90 correlation dataset
-    fprintf('90x90 correlation dataset\n');
-    inputSize = 90*90;
-    training_data = loadFMRIData('../data/training_corr_dataset.mat');
-    training_labels = loadFMRIData('../data/trainingLabels.mat');
-    test_data = loadFMRIData('../data/test_corr_dataset.mat');
-    test_labels = loadFMRIData('../data/testLabels.mat');
-elseif datasetnum == 3
-    % 91x45 correlation dataset by deleting symmetry term
-    fprintf('91x45 correlation dataset by deleting symmetry term\n');
-    inputSize = 91*45;
-    training_data = loadFMRIData('../data/training_halfcorr_dataset.mat');
-    training_labels = loadFMRIData('../data/training_halfcorr_labels.mat');
-    test_data = loadFMRIData('../data/test_halfcorr_dataset.mat');
-    test_labels = loadFMRIData('../data/test_halfcorr_labels.mat');  
-elseif datasetnum == 4
-    % 90x90 correlation dataset
-    fprintf('43x21 correlation dataset\n');
-    inputSize = 43*21;
-    training_data = loadFMRIData('../data/training_corr42_dataset.mat');
-    training_labels = loadFMRIData('../data/training_corr42_labels.mat');
-    test_data = loadFMRIData('../data/test_corr42_dataset.mat');
-    test_labels = loadFMRIData('../data/test_corr42_labels.mat');
-end
-training_labels(training_labels==0) = 2; % Remap 0 to 2
-test_labels(test_labels==0) = 2; % Remap 0 to 2
+% choose dataset
+[ inputSize, training_data, training_labels, test_data, test_labels] = ...
+    selectDataset( datasetnum );
 
 numClasses = 2;     % Number of classes (MNIST images fall into 10 classes)
 
@@ -77,7 +46,7 @@ numClasses = 2;     % Number of classes (MNIST images fall into 10 classes)
 % have saved them
 
 
-inputData = test_data;
+inputData = training_data;
 
 % For debugging purposes, you may wish to reduce the size of the input data
 % in order to speed up gradient checking.
@@ -104,7 +73,7 @@ theta = range * randn(numClasses * inputSize, 1);
 %
 %  Implement softmaxCost in softmaxCost.m.
 
-[cost, grad] = softmaxCost(theta, numClasses, inputSize, lambda, inputData, test_labels);
+[cost, grad] = softmaxCost(theta, numClasses, inputSize, lambda, inputData, training_labels);
 
 % %%======================================================================
 % %% STEP 3: Gradient checking
@@ -136,7 +105,7 @@ theta = range * randn(numClasses * inputSize, 1);
 
 options.maxIter = 100;
 softmaxModel = softmaxTrain(inputSize, numClasses, lambda, ...
-                            inputData, test_labels, options);
+                            inputData, training_labels, options);
 
 % Although we only use 100 iterations here to train a classifier for the
 % MNIST data set, in practice, training for more iterations is usually
@@ -146,7 +115,7 @@ softmaxModel = softmaxTrain(inputSize, numClasses, lambda, ...
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);
 
-trainacc = mean(test_labels(:) == pred(:));
+trainacc = mean(training_labels(:) == pred(:));
 fprintf('Training Accuracy: %0.3f%%\n', trainacc * 100);
 
 %%======================================================================
@@ -161,12 +130,12 @@ fprintf('Training Accuracy: %0.3f%%\n', trainacc * 100);
 
 
 
-inputData = training_data;
+inputData = test_data;
 
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);
 
-testacc = mean(training_labels(:) == pred(:));
+testacc = mean(test_labels(:) == pred(:));
 fprintf('Test Accuracy: %0.3f%%\n', testacc * 100);
 
 % Accuracy is the proportion of correctly classified images

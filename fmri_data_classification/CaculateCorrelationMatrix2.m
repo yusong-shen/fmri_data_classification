@@ -38,8 +38,8 @@ testdirpath = 'D:\miniProject\fmri_data_classification\testData50';
 % 42x42 corr matrix -> 43x21
 [training_corr_matrix, training_labels] = loadFMRIDataset(trainingdirpath, 'co42');
 
-save('training_corr42_dataset','training_corr_matrix');
-save('training_corr42_labels.mat','training_labels');
+% save('training_corr42_dataset','training_corr_matrix');
+% save('training_corr42_labels.mat','training_labels');
 %% test set
 % [test_corr_matrix, test_labels] = loadFMRIDataset(testdirpath);
 % save('test_corr_dataset.mat','test_corr_matrix');
@@ -60,5 +60,15 @@ save('training_corr42_labels.mat','training_labels');
 % 42x42 corr matrix -> 43x21
 [test_corr_matrix, test_labels] = loadFMRIDataset(testdirpath, 'co42');
 
-save('test_corr42_dataset','test_corr_matrix');
-save('test_corr42_labels.mat','test_labels');
+% save('test_corr42_dataset','test_corr_matrix');
+% save('test_corr42_labels.mat','test_labels');
+
+%% Shuffle the data
+% 
+
+
+% [ s_trainingset,s_traininglabels,s_testset,s_testlabels ] = ...
+%     shuffleFMRIDataset( trainingset,traininglabels,testset,testlabels)
+
+
+

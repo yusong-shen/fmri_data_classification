@@ -48,7 +48,7 @@ beta = 3;              % weight of sparsity penalty term
 %  This loads our training data from the MNIST database files.
 
 % choose dataset
-datasetnum = 4;
+datasetnum = 2;
 
 if datasetnum == 1
     % 90x130 original fmri dataset
