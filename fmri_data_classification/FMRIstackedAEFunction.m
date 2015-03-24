@@ -1,4 +1,5 @@
-function [ trainacc, testacc, sae1OptTheta,stackedAETheta, stackedAEOptTheta  ] = FMRIstackedAEFunction( trainingset,traininglabels,testset,testlabels, parameters )
+function [ trainacc1, testacc1, trainacc2, testacc2, thetas  ] = ...
+    FMRIstackedAEFunction( trainingset,traininglabels,testset,testlabels, parameters )
 % run stacked autoencoder for fmri dataset
 %
 
@@ -18,16 +19,14 @@ function [ trainacc, testacc, sae1OptTheta,stackedAETheta, stackedAEOptTheta  ] 
 %  change the code in this file.
 %
 
-clear all;close all; 
-
 addpath '../library/'
 addpath '../library/minFunc/'
 
 SKIPTO = 0;
-DISPLAY = false;
+DISPLAY = True;
 
 options.Method = 'lbfgs';
-options.maxIter = 100;
+options.maxIter = 200;
 options.display = 'on';
 
 %%======================================================================
@@ -36,15 +35,15 @@ options.display = 'on';
 %  change the parameters below.
 
 
-numClasses = 2;
-hiddenSizeL1 = 200;    % Layer 1 Hidden Size
-hiddenSizeL2 = 200;    % Layer 2 Hidden Size
-sparsityParam = 0.1;   % desired average activation of the hidden units.
+numClasses = parameters.numClasses ;
+hiddenSizeL1 = parameters.hiddenSizeL1 ;    % Layer 1 Hidden Size
+hiddenSizeL2 = parameters.hiddenSizeL2 ;    % Layer 2 Hidden Size
+sparsityParam = parameters.sparsityParam ;   % desired average activation of the hidden units.
                        % (This was denoted by the Greek alphabet rho, which looks like a lower-case "p",
 		               %  in the lecture notes).
-lambda = 3e-3;         % weight decay parameter
-beta = 3;              % weight of sparsity penalty term
-
+lambda = parameters.lambda ;         % weight decay parameter
+beta = parameters.beta ;              % weight of sparsity penalty term
+inputSize = parameters.inputSize;
 
 
 %%======================================================================
@@ -53,49 +52,13 @@ beta = 3;              % weight of sparsity penalty term
 %  This loads our training data from the MNIST database files.
 
 % choose dataset
-datasetnum = 2;
 
-if datasetnum == 1
-    % 90x130 original fmri dataset
-    fprintf('90x130 original fmri dataset\n');
-    inputSize = 90*130;
-    training_data = loadFMRIData('../data/training_fmri_dataset.mat');
-    training_labels = loadFMRIData('../data/training_fmri_labels.mat');
-    test_data = loadFMRIData('../data/test_fmri_dataset.mat');
-    test_labels = loadFMRIData('../data/test_fmri_labels.mat');
-elseif datasetnum == 2
-    % 90x90 correlation dataset
-    fprintf('90x90 correlation dataset\n');
-    inputSize = 90*90;
-    training_data = loadFMRIData('../data/training_corr_dataset.mat');
-    training_labels = loadFMRIData('../data/trainingLabels.mat');
-    test_data = loadFMRIData('../data/test_corr_dataset.mat');
-    test_labels = loadFMRIData('../data/testLabels.mat');
-elseif datasetnum == 3
-    % 91x45 correlation dataset by deleting symmetry term
-    fprintf('91x45 correlation dataset by deleting symmetry term\n');
-    inputSize = 91*45;
-    training_data = loadFMRIData('../data/training_halfcorr_dataset.mat');
-    training_labels = loadFMRIData('../data/training_halfcorr_labels.mat');
-    test_data = loadFMRIData('../data/test_halfcorr_dataset.mat');
-    test_labels = loadFMRIData('../data/test_halfcorr_labels.mat');  
-elseif datasetnum == 4
-    % 90x90 correlation dataset
-    fprintf('43x21 correlation dataset\n');
-    inputSize = 43*21;
-    training_data = loadFMRIData('../data/training_corr42_dataset.mat');
-    training_labels = loadFMRIData('../data/training_corr42_labels.mat');
-    test_data = loadFMRIData('../data/test_corr42_dataset.mat');
-    test_labels = loadFMRIData('../data/test_corr42_labels.mat');
-end
-training_labels(training_labels==0) = 2; % Remap 0 to 2
-test_labels(test_labels==0) = 2; % Remap 0 to 2
-trainData = training_data;
-testData = test_data;
-trainLabels = training_labels;
-testLabels = test_labels;
-clear training_data;
-clear test_data;
+trainData = trainingset;
+testData = testset;
+trainLabels = traininglabels;
+testLabels = testlabels;
+clear trainingset;
+clear testset;
 
 if SKIPTO <= 2
   %%======================================================================
@@ -120,8 +83,9 @@ if SKIPTO <= 2
       beta, trainData), ...
       sae1Theta, options);
 
-  save('saves/step2.mat', 'sae1OptTheta');
-
+%   save('saves/step2.mat', 'sae1OptTheta');
+  thetas.sae1OptTheta = sae1OptTheta;
+  
   % -------------------------------------------------------------------------
 else
   load('saves/step2.mat');
@@ -159,8 +123,8 @@ if SKIPTO <= 3
       beta, sae1Features), ...
       sae2Theta, options);
 
-  save('saves/step3.mat', 'sae2OptTheta');
-
+%   save('saves/step3.mat', 'sae2OptTheta');
+  thetas.sae2OptTheta = sae2OptTheta;
   % -------------------------------------------------------------------------
 else
   load('saves/step3.mat')
@@ -202,8 +166,9 @@ if SKIPTO <= 4
                               sae2Features, trainLabels, options);
   saeSoftmaxOptTheta = softmaxModel.optTheta(:);
 
-  save('saves/step4.mat', 'saeSoftmaxOptTheta');
-
+%   save('saves/step4.mat', 'saeSoftmaxOptTheta');
+  thetas.saeSoftmaxOptTheta = saeSoftmaxOptTheta;
+  
   % -------------------------------------------------------------------------
 else
   load('saves/step4.mat');
@@ -241,7 +206,9 @@ if SKIPTO <= 5
       lambda, trainData, trainLabels), ...
       stackedAETheta, options);
 
-  save('saves/step5.mat', 'stackedAEOptTheta');
+%   save('saves/step5.mat', 'stackedAEOptTheta');
+  thetas.stackedAETheta = stackedAETheta;
+  thetas.stackedAEOptTheta = stackedAEOptTheta;
 else
   load('saves/step5.mat');
 end
@@ -271,26 +238,26 @@ end
 [pred] = stackedAEPredict(stackedAETheta, inputSize, hiddenSizeL2, ...
                           numClasses, netconfig, trainData);
 
-acc = mean(trainLabels(:) == pred(:));
-fprintf('Before Finetuning Training Accuracy: %0.3f%%\n', acc * 100);
+trainacc1 = mean(trainLabels(:) == pred(:));
+fprintf('Before Finetuning Training Accuracy: %0.3f%%\n', trainacc1 * 100);
 
 [pred] = stackedAEPredict(stackedAETheta, inputSize, hiddenSizeL2, ...
                           numClasses, netconfig, testData);
 
-acc = mean(testLabels(:) == pred(:));
-fprintf('Before Finetuning Test Accuracy: %0.3f%%\n', acc * 100);
+testacc1 = mean(testLabels(:) == pred(:));
+fprintf('Before Finetuning Test Accuracy: %0.3f%%\n', testacc1 * 100);
 
 [pred] = stackedAEPredict(stackedAEOptTheta, inputSize, hiddenSizeL2, ...
                           numClasses, netconfig, trainData);
 
-acc = mean(trainLabels(:) == pred(:));
-fprintf('After Finetuning Training Accuracy: %0.3f%%\n', acc * 100);
+trainacc2 = mean(trainLabels(:) == pred(:));
+fprintf('After Finetuning Training Accuracy: %0.3f%%\n', trainacc2 * 100);
 
 [pred] = stackedAEPredict(stackedAEOptTheta, inputSize, hiddenSizeL2, ...
                           numClasses, netconfig, testData);
 
-acc = mean(testLabels(:) == pred(:));
-fprintf('After Finetuning Test Accuracy: %0.3f%%\n', acc * 100);
+testacc2 = mean(testLabels(:) == pred(:));
+fprintf('After Finetuning Test Accuracy: %0.3f%%\n', testacc2 * 100);
 
 % Accuracy is the proportion of correctly classified images
 % The results for our implementation were:

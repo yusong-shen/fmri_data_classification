@@ -19,10 +19,10 @@ addpath '../library/'
 addpath '../library/minFunc/'
 
 SKIPTO = 0;
-DISPLAY = false;
+DISPLAY = true;
 
 options.Method = 'lbfgs';
-options.maxIter = 100;
+options.maxIter = 40;
 options.display = 'on';
 
 %%======================================================================
