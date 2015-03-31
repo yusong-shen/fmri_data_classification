@@ -17,10 +17,12 @@ arg_list = zeros(n_lambda,1);
 trainacc_list = zeros(n_lambda,1);
 valacc_list = zeros(n_lambda,1);
 datasetnum = 2;
-[ inputSize, training_data, training_labels, test_data, test_labels] = ...
+[ inputSize, training_data, training_labels, test_data, test_labels, s_ind1, s_ind2] = ...
     selectDataset( datasetnum );
 numSample = size(training_data,2);
 kfold = 10;
+data_order = sprintf('data_order');
+save(data_order, 's_ind1', 's_ind2');
 
 % Todo
 % 1. use crossvalind() function to split the trainingset to new trainingset

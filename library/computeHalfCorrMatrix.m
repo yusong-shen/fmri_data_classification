@@ -14,9 +14,9 @@ m = size(AD_ROI_index,2);
 folder = dir(strcat(folderpath,'/*.mat'));
 num = length(folder);
 if smallarea == false
-    corr_matrix = zeros(91*45, num);
+    corr_matrix = zeros(89*45, num);
 else
-    corr_matrix = zeros((m+1)*m/2, num);
+    corr_matrix = zeros((m-1)*m/2, num);
 end
 
 for i = 1:num

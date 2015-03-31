@@ -23,7 +23,7 @@ addpath '../library/'
 addpath '../library/minFunc/'
 
 SKIPTO = 0;
-DISPLAY = True;
+DISPLAY = false;
 
 options.Method = 'lbfgs';
 options.maxIter = 200;

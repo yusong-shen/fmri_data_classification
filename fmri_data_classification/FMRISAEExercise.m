@@ -42,9 +42,15 @@ for i = 1:kfold
 % choose the best lambda  
 % randomly partition the dataset to 10 subsets,
 % 9 for training, 1 for testing
-[ s_trainingset,s_traininglabels,s_testset,s_testlabels ] = ...
+[ s_trainingset,s_traininglabels,s_testset,s_testlabels,s_ind1,s_ind2 ] = ...
 shuffleFMRIDataset( trainingset,traininglabels,testset,testlabels, kfold);
-
+load('dict_test.mat');
+load('dict_training.mat');
+dict = [dict_training; dict_test];
+train_data_file = dict(s_ind1,1);
+test_data_file = dict(s_ind2,1);
+dataname = sprintf('saves/dataset_%d_%ditr.mat',datasetnum,i);
+save(dataname,'s_trainingset','s_traininglabels','s_testset','s_testlabels','s_ind1','s_ind2');
 % Todo : change this part to use validateSAE
 % % validateSoftmax2 will further randomly partition the training set
 % % to 10 subset, 9 for training , 1 for validating
@@ -83,6 +89,8 @@ trainacc1 = 1/kfold*sum(trainacc_list(:,1));
 testacc1 = 1/kfold*sum(testacc_list(:,1));
 trainacc2 = 1/kfold*sum(trainacc_list(:,2));
 testacc2 = 1/kfold*sum(testacc_list(:,2));
+accname = sprintf('acc_dataset_%d.mat',datasetnum);
+save(accname, 'trainacc_list','testacc_list');
 
 %% plot
 % Todo 
@@ -93,13 +101,19 @@ h1 = plot(1:kfold,trainacc_list(:,1),'-.og','MarkerFaceColor','r');
 h2 = plot(1:kfold,testacc_list(:,1),'-.oy','MarkerFaceColor','b');
 h3 = plot(1:kfold,trainacc_list(:,2));
 h4 = plot(1:kfold,testacc_list(:,2),'Color','k');
+h5 = plot(1:kfold,testacc1*ones(kfold,1),'Color','y');
+h6 = plot(1:kfold,testacc2*ones(kfold,1),'Color','m');
 hold off
-legend([h1,h2,h3,h4],'training accuracy before tuning','test accuracy before tuning',...
-    'training accuracy after tuning','test accuracy after tuning');
+labels = {'training accuracy before tuning','test accuracy before tuning',...
+    'training accuracy after tuning','test accuracy after tuning',...
+    'average test accuracy before tuning', 'average test accuracy after tuning'};
+legend([h1,h2,h3,h4,h5,h6],labels);
 str = sprintf('training and testing accuracy,datasetnum:%d, %d-fold',datasetnum,kfold);
 title(str);
 xlabel('the nth time of iteration');
 ylabel(' accuracy');
+figname = sprintf('saves/dataset_%d_accuracy',datasetnum);
+savefig(figname);
 % 
 % subplot(2,1,2);
 % % figure;

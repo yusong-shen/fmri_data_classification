@@ -6,6 +6,8 @@ close all;clear all;clc
 % choose dataset
 % Todo : loop over 4 datasets
 % 
+addpath '..\library'
+addpath '..\library\minFunc'
 
 for datasetnum = 1:4
 kfold = 10;
@@ -27,9 +29,10 @@ selectDataset( datasetnum );
     for i =1:kfold    
         % randomly partition the dataset to 10 subsets,
         % 9 for training, 1 for testing
-        [ s_trainingset,s_traininglabels,s_testset,s_testlabels ] = ...
+        [ s_trainingset,s_traininglabels,s_testset,s_testlabels,s_ind1,s_ind2 ] = ...
         shuffleFMRIDataset( trainingset,traininglabels,testset,testlabels, kfold);
-
+        data_order = sprintf('saves\\data_order_dataset%d_%ditr.mat',datasetnum, i);
+        save(data_order, 's_ind1', 's_ind2');
         % validateSoftmax2 will further randomly partition the training set
         % to 10 subset, 9 for training , 1 for validating
         % choose the bestlambda by average 10 accuracy
@@ -46,17 +49,19 @@ selectDataset( datasetnum );
         s_testset, s_testlabels);
         trainacc_list(i) = trainacc;
         testacc_list(i) = testacc;
-        filename = sprintf('softmaxModel_datasetnum%d_%ditr.mat',datasetnum,i);
+        filename = sprintf('saves\\softmaxModel_datasetnum%d_%ditr.mat',datasetnum,i);
         save(filename,'softmaxModel');
 
     end
 
-% average the k times' test accuracy to reduce the bias 
+%% average the k times' test accuracy to reduce the bias 
 valacc = 1/kfold*sum(valacc_list(:));
 trainacc = 1/kfold*sum(trainacc_list(:));
 testacc = 1/kfold*sum(testacc_list(:));
 
-
+acc_file = sprintf('saves\\accuracy_dataset_%d.mat',datasetnum);
+save(acc_file,'valacc', 'valacc_list', 'trainacc', 'trainacc_list', 'testacc', ...
+    'testacc_list');
 
 
 %% plot
@@ -84,8 +89,8 @@ str = sprintf('best lambda,datasetnum:%d, %d-fold',datasetnum,kfold);
 title(str);
 xlabel('the nth time of iteration');
 ylabel('lambda');
-
-
+figname = sprintf('saves\\test_result_dataset_%d.fig',datasetnum);
+savefig(figname);
 end
 
 
