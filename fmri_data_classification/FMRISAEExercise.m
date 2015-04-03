@@ -6,7 +6,7 @@ addpath '../library/'
 addpath '../library/minFunc/'
 
 
-for datasetnum = 1:4
+for datasetnum = 2:2
 
 %% choose dataset
 % Todo : loop over 4 datasets
@@ -44,13 +44,16 @@ for i = 1:kfold
 % 9 for training, 1 for testing
 [ s_trainingset,s_traininglabels,s_testset,s_testlabels,s_ind1,s_ind2 ] = ...
 shuffleFMRIDataset( trainingset,traininglabels,testset,testlabels, kfold);
-load('dict_test.mat');
-load('dict_training.mat');
-dict = [dict_training; dict_test];
-train_data_file = dict(s_ind1,1);
-test_data_file = dict(s_ind2,1);
+
+% save the specific data in each iteration
+% load('dict_test.mat');
+% load('dict_training.mat');
+% dict = [dict_training; dict_test];
+% train_data_file = dict(s_ind1,1);
+% test_data_file = dict(s_ind2,1);
 dataname = sprintf('saves/dataset_%d_%ditr.mat',datasetnum,i);
 save(dataname,'s_trainingset','s_traininglabels','s_testset','s_testlabels','s_ind1','s_ind2');
+
 % Todo : change this part to use validateSAE
 % % validateSoftmax2 will further randomly partition the training set
 % % to 10 subset, 9 for training , 1 for validating
