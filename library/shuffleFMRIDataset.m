@@ -2,6 +2,7 @@ function s_dataset = shuffleFMRIDataset( dataset,nfold )
 %shuffleFMRIdataset : shuffle the trainingset and testset
 %   In order to exam if there is unbalance in the data
 
+
 if (nargin<5) || isempty(nfold)
     nfold = 2;
 end

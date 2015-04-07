@@ -1,6 +1,35 @@
 function [ accuracys ,  thetas  ] = FMRIstackedAEFunction( dataset, parameters )
-% run stacked autoencoder for fmri dataset
-%
+%FMRIstackedAEfunction -  run stacked autoencoder for fmri dataset
+% Input
+%  Example:
+%     dataset = selectDataset( datasetnum );
+% 
+%     %% initialize parameter
+%     parameters.numClasses = 2;
+%     parameters.hiddenSizeL1 = 200;    % Layer 1 Hidden Size
+%     parameters.hiddenSizeL2 = 200;    % Layer 2 Hidden Size
+%     parameters.sparsityParam = 0.1;   % desired average activation of the hidden units.
+%                            % (This was denoted by the Greek alphabet rho, which looks like a lower-case "p",
+%                            %  in the lecture notes).
+%     parameters.lambda = 3e-3;         % weight decay parameter
+%     parameters.beta = 3;              % weight of sparsity penalty term
+%     parameters.inputSize = dataset.inputSize;
+% 
+% Output
+%     % Store the training and test accuracy to a struct 'accuracys'
+%     % trainacc1, testacc1, trainacc2, testacc2,
+%     accuracys.trainacc1 = trainacc1;
+%     accuracys.testacc1 = testacc1;
+%     accuracys.trainacc2 = trainacc2;
+%     accuracys.testacc2 = testacc2;
+% 
+%     store the weight in different stage 
+%     can be used to reproduce the result
+%       thetas.sae1OptTheta = sae1OptTheta;
+%       thetas.sae2OptTheta = sae2OptTheta;
+%       thetas.saeSoftmaxOptTheta = saeSoftmaxOptTheta;
+%       thetas.stackedAETheta = stackedAETheta;
+%       thetas.stackedAEOptTheta = stackedAEOptTheta;
 
 
 %% Stacked Autoencoder for FMRI Brain Network dataset 
@@ -261,15 +290,3 @@ accuracys.trainacc1 = trainacc1;
 accuracys.testacc1 = testacc1;
 accuracys.trainacc2 = trainacc2;
 accuracys.testacc2 = testacc2;
-
-% Accuracy is the proportion of correctly classified images
-% The results for our implementation were:
-%
-% Before Finetuning Test Accuracy: XX.XXXX%
-% After Finetuning Test Accuracy: XX.XXXX%
-%
-% If your values are too low (accuracy less than X.XX), you should check
-% your code for errors, and make sure you are training on the
-% entire data set of 60000 28x28 training images
-% (unless you modified the loading code, this should be the case)
-

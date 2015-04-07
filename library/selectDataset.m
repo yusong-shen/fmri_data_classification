@@ -1,6 +1,24 @@
 function dataset = selectDataset( datasetnum )
-%selectDataset Summary of this function goes here
-%   Detailed explanation goes here
+%selectDataset - load the dataset of specific fmri data formatted
+% 
+%   
+% Input :
+% datasetnum
+% Number of feature
+% 1 - 90x130 = 11700
+% 2 - 90x90 = 8100
+% 3 - 81x45 = 4005 
+% 4 - 41x21 = 861
+% Dataset 1 : the original data , 90 rows stand for 90 different brain areas,
+%     130 columns stand for 130 sample at different moment, the sampling period is about 10+ms 
+% Dataset 2: compute the correlation matrix from the dataset 1, Aij belongs 
+%     to [-1,1], which means the correlation coefficient between ith area and jth area. 
+%     If Aij close to 1, it means when  area iís blood-oxygen-level dependent(BOLD) increase, 
+%     the area jís BOLD also tend to increase with linear relation with area iís.   
+% Dataset 3 : Since the correlation matrix is a symmetric matrix, I delete
+%     the duplicated symmetry entry from dataset 2, which reduce inputís dimension.
+% Dataset 4 : Select 43 sub-area in whole brain network to reduce inputís dimension. 
+% 
 
 if datasetnum == 1
     % 90x130 original fmri dataset

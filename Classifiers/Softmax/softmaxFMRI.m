@@ -1,17 +1,20 @@
 function [trainacc, testacc, softmaxModel] = softmaxFMRI(lambda, range ,dataset)
-% softmax regression for fmri dataset
-%  This file contains code that helps you get started on the
-%  softmax exercise. You will need to write the softmax cost function
-%  in softmaxCost.m and the softmax prediction function in softmaxPred.m.
-%  For this exercise, you will not need to change any code in this file,
-%  or any other files other than those mentioned above.
-%  (However, you may be required to do so in later exercises)
-% if (nargin<3) || isempty(datasetnum)
-%     datasetnum = 4;
-% end
-%     
+%softmaxFMRI : implement softmax regression
+%
+% input : 
+%  a given hyper-parameters : 
+%   weight-dacay lambda, range of initial weight
+%  a dataset struct, formatted as followed :
+%      dataset.inputSize
+%      dataset.trainingset
+%      dataset.traininglabels
+%      dataset.testset
+%      dataset.testlabels
+% output :
+%   the traning and test accuracy
+%   the softmaxModel - can be used to reproduce the prediction
+%
 
-% inputSize, training_data, training_labels, test_data, test_labels)
 inputSize = dataset.inputSize;
 training_data = dataset.trainingset;
 training_labels = dataset.traininglabels;

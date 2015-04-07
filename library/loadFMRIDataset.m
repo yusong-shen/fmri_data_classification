@@ -1,6 +1,7 @@
 function [ dataset,labels, inputSize ] = loadFMRIDataset( dirpath,datatype,ADfolder,Normfolder )
-%loading FMRI dataset from a directory
-%   Detailed explanation goes here
+%loadFMRIDataset : loading FMRI dataset from 
+%
+%
 
 % set default arguments
 if (nargin<2) || isempty(datatype)

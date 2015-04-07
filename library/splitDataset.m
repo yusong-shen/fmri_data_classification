@@ -1,6 +1,7 @@
 function [ new_dataset ] = splitDataset( dataset,labels,inputSize,test_portion )
-%splitDataset
-%
+%splitDataset split a dataset into training and test set
+% test_portion is the portion of test set
+% return a struct
 
 % e.g. dataset : 8100 x 164, labels : 164 x 1
 % test_portion = 0.1 --> testset : 8100x17 
