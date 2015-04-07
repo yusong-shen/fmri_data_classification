@@ -27,7 +27,7 @@ dataset = selectDataset( datasetnum );
         % validateSoftmax2 will further randomly partition the training set
         % to 10 subset, 9 for training , 1 for validating
         % choose the bestlambda by average 10 accuracy
-        [bestlambda,valacc]  = validateSoftmax2( lambda_list, s_dataset, kfold );
+        [bestlambda,valacc]  = validateSoftmax( lambda_list, s_dataset, kfold );
         valacc_list(i) = valacc;
         bestlambda_list(i) = bestlambda;
 
