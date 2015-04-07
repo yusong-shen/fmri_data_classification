@@ -15,17 +15,19 @@ the function that transform the original data to better formatted data can be fo
 
 
 Apr 3rd, 2015:
-Todo : Rewrite the code to a more readable version, add the document to each function
-All the codes are diveided into 5 parts : 
-1) Data : load dataset, data wrangling, shuffle data etc.
-2) Algorithm : Training and prediction of Softmax regression, Stacked Autoencoder
-3) Validation : run cross validation for above algorithm
-4) Analysis : plot the accuracy figure, visualize weights
-5) Demo : a script organized 1)-4) parts
-
 for the fmri data:
 164 fmri data : 87 AD, 77 Normal Control
 Number of Patients :  38 AD,  20 Normal Control
+
+Ape 7th, 2015:
+Rewrite the code to a more readable version, add the document to each function
+All the codes are diveided into 5 parts : 
+1) data : put the dataset here
+2) Classifiers : Training and prediction of Softmax regression, Stacked Autoencoder
+3) library : all the common used functions
+4) Analysis : plot the accuracy figure, visualize weights
+5) Demo : a script organized 1)-4) parts
+
 
 Datasetnum
 Number of feature
