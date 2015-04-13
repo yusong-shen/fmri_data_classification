@@ -1,6 +1,7 @@
-function [ dataset,labels ] = loadFMRIDataset( dirpath,datatype,ADfolder,Normfolder )
-%loading FMRI dataset from a directory
-%   Detailed explanation goes here
+function [ dataset,labels, inputSize ] = loadFMRIDataset( dirpath,datatype,ADfolder,Normfolder )
+%loadFMRIDataset : loading FMRI dataset from 
+%
+%
 
 % set default arguments
 if (nargin<2) || isempty(datatype)
@@ -36,20 +37,24 @@ folderNormname = strcat(dirpath,'/',Normfolder);
 if datatype == 'corr'
     matrix1 = computeCorrMatrix(folderADname);
     matrix2 = computeCorrMatrix(folderNormname);
+    inputSize = 90*90;
     fprintf('compute 90x90 corr dataset successfully\n');
 elseif datatype == 'fmri'
     matrix1 = catMatrix(folderADname);
     matrix2 = catMatrix(folderNormname);
+    inputSize = 90*130;
     fprintf('compute 90x130 fmri dataset successfully\n');
 elseif datatype == 'half'
     matrix1 = computeHalfCorrMatrix(folderADname);
-    matrix2 = computeHalfCorrMatrix(folderNormname);   
-    fprintf('compute 91x45 corr half dataset successfully\n');
+    matrix2 = computeHalfCorrMatrix(folderNormname);
+    inputSize = 89*45;
+    fprintf('compute 89x45 corr half dataset successfully\n');
 elseif datatype == 'co42'
     smallarea = true;
     matrix1 = computeHalfCorrMatrix(folderADname,smallarea);
     matrix2 = computeHalfCorrMatrix(folderNormname,smallarea);
-    fprintf('compute 43x21 corr half sub dataset successfully\n');
+    inputSize = 41*21;
+    fprintf('compute 41x21 corr half sub dataset successfully\n');
 end
 
 dataset = [matrix1, matrix2];
