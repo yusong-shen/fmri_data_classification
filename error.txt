@@ -1,0 +1,21 @@
+C:\aalprocessing\Analysis\FunRaw\019_S_4252\0701_Resting State fMRI
+Traceback (most recent call last):
+  File ".\seperate_dcm_files.py", line 157, in <module>
+    seperate_dcm(src_path, dst_path)
+  File ".\seperate_dcm_files.py", line 128, in seperate_dcm
+    os.rename(dst_lists[i], new_path)
+WindowsError: [Error 2] The system cannot find the file specified
+PS C:\Deep Learning\fmri_classification_clean\fmri_data_classification> python .\seperate_dcm_files.py
+
+
+
+C:\aalprocessing\Analysis\FunRaw\031_S_4721\0501_WIP Resting State fMRI
+Traceback (most recent call last):
+  File ".\seperate_dcm_files.py", line 157, in <module>
+    seperate_dcm(src_path, dst_path)
+  File ".\seperate_dcm_files.py", line 120, in seperate_dcm
+    dir_list = explore_dir(dir_path)
+  File ".\seperate_dcm_files.py", line 90, in explore_dir
+    for tuple in sp_list:
+TypeError: 'NoneType' object is not iterable
+PS C:\Deep Learning\fmri_classification_clean\fmri_data_classification> python .\seperate_dcm_files.py

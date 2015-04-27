@@ -72,7 +72,8 @@ def seperate_files(fileList , dirPath):
 		for i in range(int(num)):
 			sp_files = fileList[6720*i:6720*(i+1)] 
 			sp_dirName = sp_files[0].split('_')
-			dirName = sp_dirName[1]+'_'+sp_dirName[2]+'_'+sp_dirName[3]+'_'+str(i)
+			time = sp_dirName[10][:8]
+			dirName = sp_dirName[1]+'_'+sp_dirName[2]+'_'+sp_dirName[3]+'_'+time
 			dir_tuple = (dirName, sp_files, dirPath)
 			dir_list.append(dir_tuple)
 
@@ -80,21 +81,26 @@ def seperate_files(fileList , dirPath):
 
 def explore_dir(path):
 	# use os.walk to travese all the dir and files
-	dir_dict = {}
+	dir_list = []
 	for dirPath, subdirList, fileList in os.walk(path):
 		print dirPath
 		if fileList != []:
-			dir_list = seperate_files(fileList, dirPath)
+			# Todo : the root folder may contain more than two subfolder
+			sp_list =  seperate_files(fileList, dirPath)
+			for tuple in sp_list:
+				dir_list.append(tuple)
 			# filePaths = [os.path.join(dirName,tuple[1]) for tuple in dir_List]
-			return dir_list
+	return dir_list
 
 def move_files(dir_list,dst_path):
 	# dir_list[0] = ( '010_S_4442_0' , [fileList ... 6720] , 'C:\\...')
 	# move 6720 files from original to dstination
 	# original = os.path.join(dir_list[i][2], file)
 	# dst = dst_path + '\\' + dir_list[i][0]
+	dst_lists = []
 	for dir_tuple in dir_list:
 		dst = dst_path + '\\' + dir_tuple[0]
+		dst_lists.append(dst)
 		# print 'dst:',dst
 		if not os.path.exists(dst):
 			os.makedirs(dst)
@@ -105,21 +111,33 @@ def move_files(dir_list,dst_path):
 			# print 'src:',src
 			shutil.copy(src, dst)
 			# os.rename(src,dst)
+	return sorted(dst_lists)
+
 
 def seperate_dcm(src_path, dst_path):
 	dir_paths = list_dirpath(src_path)
 	for dir_path in dir_paths:
 		dir_list = explore_dir(dir_path)
-		move_files(dir_list, dst_path)
+		dst_lists = move_files(dir_list, dst_path)	
+		# Todo : Rename folder
+		# 013_S_4917_20120910  - 013_S_4917_1
+		# 013_S_4917_20121126 - 013_S_4917_2
+		# print dst_lists
+		for i in range(len(dst_lists)):
+			new_path = dst_lists[i][:-8]+str(i)
+			os.rename(dst_lists[i], new_path)
 
-	
 
 
-src_path = "C:\\aalprocessing\\Analysis\\FunRaw"
-dst_path = "C:\\aalprocessing\\Sorted_Result\\FunRaw"
-test_path = "C:\\aalprocessing\\Analysis\\FunRaw\\013_S_4579"
 
-# dir_list = explore_dir(src_path)
+
+
+
+src_path = "C:\\aalprocessing\\adnicorrect"
+dst_path = "C:\\aalprocessing\\adnicorrect\\FunRaw"
+test_path = "C:\\aalprocessing\\Analysis\\FunRaw\\013_S_4917"
+
+# dir_list = explore_dir(test_path)
 
 # Just for test and debug
 # print sp_files
@@ -131,7 +149,10 @@ test_path = "C:\\aalprocessing\\Analysis\\FunRaw\\013_S_4579"
 # 	print len(files[1])
 # 	print files[2]
 
-# move_files(dir_list,dst_path)
+# dir_lists = move_files(dir_list,dst_path)
+# for i in range(len(dir_lists)):
+# 	new_path = dir_lists[i][:-8]+str(i)
+# 	os.rename(dir_lists[i], new_path)
 
 seperate_dcm(src_path, dst_path)
 
