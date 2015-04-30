@@ -1,0 +1,44 @@
+# SVM result 
+>> svm_for_fmri
+90x90 correlation dataset
+.*.*
+optimization finished, #iter = 230
+nu = 0.001768
+obj = -0.099004, rho = 0.060385
+nSV = 88, nBSV = 0
+Total nSV = 88
+Accuracy = 100% (112/112) (classification)
+Accuracy = 88.8889% (24/27) (classification)
+.*.*
+optimization finished, #iter = 283
+nu = 0.001791
+obj = -0.100294, rho = -0.375279
+nSV = 94, nBSV = 0
+Total nSV = 94
+Accuracy = 100% (112/112) (classification)
+Accuracy = 85.1852% (23/27) (classification)
+.*.*
+optimization finished, #iter = 261
+nu = 0.001864
+obj = -0.104373, rho = 0.122179
+nSV = 90, nBSV = 0
+Total nSV = 90
+Accuracy = 100% (112/112) (classification)
+Accuracy = 88.8889% (24/27) (classification)
+.*.*
+optimization finished, #iter = 286
+nu = 0.001781
+obj = -0.099737, rho = 0.052598
+nSV = 90, nBSV = 0
+Total nSV = 90
+Accuracy = 100% (112/112) (classification)
+Accuracy = 85.1852% (23/27) (classification)
+.*.*
+optimization finished, #iter = 267
+nu = 0.001869
+obj = -0.104679, rho = 0.038749
+nSV = 84, nBSV = 0
+Total nSV = 84
+Accuracy = 100% (112/112) (classification)
+Accuracy = 85.1852% (23/27) (classification)
+>> 

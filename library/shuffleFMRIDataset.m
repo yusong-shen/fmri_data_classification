@@ -3,7 +3,7 @@ function s_dataset = shuffleFMRIDataset( dataset,nfold )
 %   In order to exam if there is unbalance in the data
 
 
-if (nargin<5) || isempty(nfold)
+if (nargin<2) || isempty(nfold)
     nfold = 2;
 end
 
