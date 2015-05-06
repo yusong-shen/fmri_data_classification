@@ -1,7 +1,8 @@
 %% save the ADNI FMRI AAL matrix
 
 % data_path = 'C:\ADNI_AALTC_data';
-cd 'C:\ADNI_AALTC_data';
+% cd 'C:\ADNI_AALTC_data';
+cd '/Users/yusong/Code/AALTC_raw_166/MCI/'
 data_list = dir('*.mat'); 
 n = length(data_list);
 for j = 1:n
@@ -28,7 +29,9 @@ for j = 1:n
         eval(command_str2);
     end 
 
-save_path = strcat('C:/ADNI_AALTC_data/saves/',file_name);
+dirpath = '/Users/yusong/Code/AALTC_new_data_166/MCI/';
+mkdir_if_not_exist(dirpath)
+save_path = strcat(dirpath, file_name);
 save(save_path, data_name);
 
 end

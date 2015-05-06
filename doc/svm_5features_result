@@ -1,0 +1,86 @@
+# use selected features [190,550,4223,2944,5665]
+
+optimization finished, #iter = 58
+nu = 0.478261
+obj = -21.999995, rho = -1.000556
+nSV = 25, nBSV = 17
+Total nSV = 25
+Accuracy = 76.087% (35/46) (classification)
+Accuracy = 72.7273% (8/11) (classification)
+*
+optimization finished, #iter = 26
+nu = 0.521739
+obj = -23.999999, rho = 1.000114
+nSV = 30, nBSV = 19
+Total nSV = 30
+Accuracy = 73.913% (34/46) (classification)
+Accuracy = 81.8182% (9/11) (classification)
+*...*
+optimization finished, #iter = 174
+nu = 0.521739
+obj = -23.998619, rho = -1.010291
+nSV = 28, nBSV = 20
+Total nSV = 28
+Accuracy = 73.913% (34/46) (classification)
+Accuracy = 81.8182% (9/11) (classification)
+*
+optimization finished, #iter = 21
+nu = 0.478261
+obj = -22.000000, rho = 0.999936
+nSV = 27, nBSV = 17
+Total nSV = 27
+Accuracy = 76.087% (35/46) (classification)
+Accuracy = 72.7273% (8/11) (classification)
+*..
+WARNING: using -h 0 may be faster
+*
+optimization finished, #iter = 96
+nu = 0.478261
+obj = -21.999989, rho = 1.000926
+nSV = 25, nBSV = 17
+Total nSV = 25
+Accuracy = 76.087% (35/46) (classification)
+Accuracy = 72.7273% (8/11) (classification)
+
+
+90x90 correlation dataset
+*
+optimization finished, #iter = 74
+nu = 0.917943
+obj = -100.974859, rho = -0.597462
+nSV = 104, nBSV = 101
+Total nSV = 104
+Accuracy = 58.9286% (66/112) (classification)
+Accuracy = 62.963% (17/27) (classification)
+.*
+optimization finished, #iter = 115
+nu = 0.931900
+obj = -101.926648, rho = 0.594320
+nSV = 106, nBSV = 103
+Total nSV = 106
+Accuracy = 60.7143% (68/112) (classification)
+Accuracy = 70.3704% (19/27) (classification)
+*
+optimization finished, #iter = 76
+nu = 0.895969
+obj = -97.940290, rho = 0.687500
+nSV = 102, nBSV = 98
+Total nSV = 102
+Accuracy = 61.6071% (69/112) (classification)
+Accuracy = 55.5556% (15/27) (classification)
+*.*
+optimization finished, #iter = 126
+nu = 0.892857
+obj = -99.934895, rho = -0.965595
+nSV = 102, nBSV = 97
+Total nSV = 102
+Accuracy = 55.3571% (62/112) (classification)
+Accuracy = 51.8519% (14/27) (classification)
+*
+optimization finished, #iter = 90
+nu = 0.875000
+obj = -95.416132, rho = -0.841438
+nSV = 100, nBSV = 96
+Total nSV = 100
+Accuracy = 66.9643% (75/112) (classification)
+Accuracy = 40.7407% (11/27) (classification)

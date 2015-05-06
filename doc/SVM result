@@ -1,4 +1,4 @@
-# SVM result 
+# SVM result for 8100 features
 >> svm_for_fmri
 90x90 correlation dataset
 .*.*
@@ -42,3 +42,45 @@ Total nSV = 84
 Accuracy = 100% (112/112) (classification)
 Accuracy = 85.1852% (23/27) (classification)
 >> 
+
+90x130 original fmri dataset
+.*.*
+optimization finished, #iter = 306
+nu = 0.000010
+obj = -0.000562, rho = 0.170832
+nSV = 99, nBSV = 0
+Total nSV = 99
+Accuracy = 100% (112/112) (classification)
+Accuracy = 51.8519% (14/27) (classification)
+..*.*
+optimization finished, #iter = 345
+nu = 0.000011
+obj = -0.000606, rho = 0.211422
+nSV = 98, nBSV = 0
+Total nSV = 98
+Accuracy = 100% (112/112) (classification)
+Accuracy = 44.4444% (12/27) (classification)
+..*
+optimization finished, #iter = 310
+nu = 0.000011
+obj = -0.000613, rho = 0.255689
+nSV = 98, nBSV = 0
+Total nSV = 98
+Accuracy = 100% (112/112) (classification)
+Accuracy = 51.8519% (14/27) (classification)
+..*.*
+optimization finished, #iter = 339
+nu = 0.000011
+obj = -0.000618, rho = -0.253360
+nSV = 101, nBSV = 0
+Total nSV = 101
+Accuracy = 100% (112/112) (classification)
+Accuracy = 62.963% (17/27) (classification)
+..*
+optimization finished, #iter = 307
+nu = 0.000011
+obj = -0.000621, rho = -0.308347
+nSV = 103, nBSV = 0
+Total nSV = 103
+Accuracy = 100% (112/112) (classification)
+Accuracy = 55.5556% (15/27) (classification)
