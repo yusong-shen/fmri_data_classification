@@ -2,7 +2,9 @@
 
 % Todo
 
-dirpath = '/Users/yusong/Code/ADNI_AALTC_DATA_60';
+% dirpath = '/Users/yusong/Code/ADNI_AALTC_DATA_60';
+dirpath = '/Users/yusong/Code/ADNI_DATA_Complete';
+
 datatype_list = {'corr','fmri','half','co42'};
 test_portion = 0.1;
 for i = 1:2
@@ -14,7 +16,7 @@ for i = 1:2
 
 %% save the dataset to ./data folder
 % Todo
-    file_name = strcat('../data/',datatype, '_60.mat');
+    file_name = strcat('../data/',datatype, '_301.mat');
     save(file_name, 'new_dataset');
 
 end

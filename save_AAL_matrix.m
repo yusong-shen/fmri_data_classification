@@ -2,7 +2,7 @@
 
 % data_path = 'C:\ADNI_AALTC_data';
 % cd 'C:\ADNI_AALTC_data';
-cd '/Users/yusong/Code/AALTC_raw_166/MCI/'
+cd '/Users/yusong/Code/ADNI_DATA_Complete'
 data_list = dir('*.mat'); 
 n = length(data_list);
 for j = 1:n
